@@ -7,6 +7,7 @@ Resources:
         - Stack ${AWS::StackName} Function ${ResourceName}
         - ResourceName: Function
       CodeUri: src/Fetchdata
+      FunctionName: FetchData
       Handler: handler.handler
       Runtime: python3.12
       MemorySize: 3008
@@ -80,7 +81,7 @@ Resources:
   Schedule:
     Type: AWS::Scheduler::Schedule
     Properties:
-      ScheduleExpression: rate(5 minutes)
+      ScheduleExpression: rate(24 hours)
       FlexibleTimeWindow:
         Mode: 'OFF'
       Target:
