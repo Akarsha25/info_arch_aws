@@ -103,6 +103,7 @@ Resources:
           Fn::GetAtt:
           - ScheduleToFunctionRole
           - Arn
+    DependsOn: ScheduleToFunctionRole
   ScheduleToFunctionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -114,12 +115,6 @@ Resources:
             Service:
               Fn::Sub: scheduler.${AWS::URLSuffix}
           Action: sts:AssumeRole
-          Condition:
-            ArnLike:
-              aws:SourceArn:
-                Fn::Sub:
-                - arn:${AWS::Partition}:scheduler:${AWS::Region}:${AWS::AccountId}:schedule/*/${AWS::StackName}-${ResourceId}-*
-                - ResourceId: Schedule
       Policies:
       - PolicyName: StartExecutionPolicy
         PolicyDocument:

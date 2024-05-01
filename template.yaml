@@ -86,6 +86,7 @@ Resources:
       Target:
         Arn: !GetAtt Function.Arn
         RoleArn: !GetAtt ScheduleToFunctionRole.Arn
+    DependsOn: ScheduleToFunctionRole
   ScheduleToFunctionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -96,11 +97,6 @@ Resources:
           Principal:
             Service: !Sub scheduler.${AWS::URLSuffix}
           Action: sts:AssumeRole
-          Condition:
-            ArnLike:
-              aws:SourceArn: !Sub
-                - arn:${AWS::Partition}:scheduler:${AWS::Region}:${AWS::AccountId}:schedule/*/${AWS::StackName}-${ResourceId}-*
-                - ResourceId: Schedule
       Policies:
         - PolicyName: StartExecutionPolicy
           PolicyDocument:
