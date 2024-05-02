@@ -4,4 +4,6 @@
 dependency_layer = false
 latest_infra_sync_time = "2024-05-01T03:18:03.256575"
 
-[resource_sync_states]
+[resource_sync_states."ZipFunctionSyncFlow:Function"]
+hash = "a14bf6277ead3f0f99659520afe71a9249876c16359f27d67b014f1669f079f1"
+sync_time = "2024-05-01T04:48:06.133774"

@@ -5,7 +5,7 @@ codeuri = "c:\\Users\\hegde\\OneDrive\\Documents\\IA\\Group-5-final\\info_arch_a
 runtime = "python3.12"
 architecture = "x86_64"
 handler = "handler.handler"
-manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+manifest_hash = "1861be9efa0d055614dbdd09b12dd0bb"
 packagetype = "Zip"
 functions = ["Function"]
 

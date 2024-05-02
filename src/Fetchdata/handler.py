@@ -10,7 +10,7 @@ import os
 def handler(event, context):
     # Log the event argument for debugging and for use in local development.
     print(json.dumps(event))
-    print("Testing python lambda")
+    print("fetching data")
 
     # # Get current date and date 7 days ago
     # current_date = datetime.datetime.now().date()
