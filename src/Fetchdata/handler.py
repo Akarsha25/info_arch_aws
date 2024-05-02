@@ -21,7 +21,7 @@ def handler(event, context):
     # date2 = date_7_days_ago.strftime("%Y-%m-%d")
 
     date1 = "2024-01-01"
-    date2 = "2023-12-31"
+    date2 = "2022-01-01"
 
     # API URL
     api_url = f"https://data.montgomerycountymd.gov/resource/mmzv-x632.csv?$where=crash_date_time between '{date2}T00:00:00' and '{date1}T23:59:59'"
