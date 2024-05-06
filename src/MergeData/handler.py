@@ -65,5 +65,4 @@ def handler(event, context):
             print(f"Unsuccessful S3 put_object response. Status - {status}")
 
 
-
     return {}
