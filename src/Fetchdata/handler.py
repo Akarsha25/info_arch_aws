@@ -41,7 +41,7 @@ def handler(event, context):
 
         # Upload CSV file to AWS S3 bucket
         s3 = boto3.client('s3')
-        bucket_name = 'info-arch-datafiles'
+        bucket_name = 'data-files-infra-myawsbucket-637423608110'
         folder_path = f'dynamic/{date1}/'
         s3.upload_file(file_format, bucket_name, os.path.join(folder_path, file_format))
 
