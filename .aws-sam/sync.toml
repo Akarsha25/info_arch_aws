@@ -2,8 +2,13 @@
 
 [sync_state]
 dependency_layer = false
-latest_infra_sync_time = "2024-05-02T23:07:30.785850"
+latest_infra_sync_time = "2024-05-05T01:14:18.245136"
 
+[resource_sync_states]
 [resource_sync_states."ZipFunctionSyncFlow:Function"]
-hash = "a14bf6277ead3f0f99659520afe71a9249876c16359f27d67b014f1669f079f1"
-sync_time = "2024-05-01T04:48:06.133774"
+hash = "50ac46eedfe3dc47e45b661b7080e6d7cbd9f174d8a61e9ed0663ecfc2b34bd0"
+sync_time = "2024-05-05T01:15:40.612266"
+
+[resource_sync_states."ZipFunctionSyncFlow:Function2"]
+hash = "e023e40903bd4ccf4c3b2d1ab39bcb81c7710475c251807781fb744f0f75203d"
+sync_time = "2024-05-05T01:00:27.823563"

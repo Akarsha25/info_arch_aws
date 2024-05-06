@@ -16,7 +16,7 @@ def handler(event, context):
     # current_date = datetime.datetime.now().date()
     # date_7_days_ago = current_date - datetime.timedelta(days=7)
 
-    # # Format dates as strings
+    # # Format dates as stsrings
     # date1 = current_date.strftime("%Y-%m-%d")
     # date2 = date_7_days_ago.strftime("%Y-%m-%d")
 
