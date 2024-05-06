@@ -106,13 +106,40 @@ Resources:
               - Effect: Allow
                 Action: lambda:InvokeFunction
                 Resource: !GetAtt Function.Arn
-  Function2:
+  Bucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: mergeddata
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: alias/aws/s3
+  Bucket2BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket2
+      PolicyDocument:
+        Id: RequireEncryptionInTransit
+        Version: '2012-10-17'
+        Statement:
+          - Principal: '*'
+            Action: '*'
+            Effect: Deny
+            Resource:
+              - !GetAtt Bucket2.Arn
+              - !Sub ${Bucket2.Arn}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+  Merge:
     Type: AWS::Serverless::Function
     Properties:
       Description: !Sub
         - Stack ${AWS::StackName} Function ${ResourceName}
-        - ResourceName: Function2
-      CodeUri: src/Function2
+        - ResourceName: Merge
+      CodeUri: src/MergeData
+      FunctionName: MergeData
       Handler: handler.handler
       Runtime: python3.12
       MemorySize: 3008
@@ -157,34 +184,8 @@ Resources:
               Resource:
                 - !Sub arn:${AWS::Partition}:s3:::${Bucket2}
                 - !Sub arn:${AWS::Partition}:s3:::${Bucket2}/*
-  Function2LogGroup:
+  MergeLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Retain
     Properties:
-      LogGroupName: !Sub /aws/lambda/${Function2}
-  Bucket2:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub ${AWS::StackName}-bucket2-${AWS::AccountId}
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: aws:kms
-              KMSMasterKeyID: alias/aws/s3
-  Bucket2BucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref Bucket2
-      PolicyDocument:
-        Id: RequireEncryptionInTransit
-        Version: '2012-10-17'
-        Statement:
-          - Principal: '*'
-            Action: '*'
-            Effect: Deny
-            Resource:
-              - !GetAtt Bucket2.Arn
-              - !Sub ${Bucket2.Arn}/*
-            Condition:
-              Bool:
-                aws:SecureTransport: 'false'
+      LogGroupName: !Sub /aws/lambda/${Merge}
