@@ -60,7 +60,8 @@ Resources:
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: info-arch-datafiles
+      BucketName:
+        Fn::Sub: data-files-${AWS::StackName}-myawsbucket-${AWS::AccountId}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:
@@ -127,14 +128,15 @@ Resources:
               Fn::GetAtt:
               - Function
               - Arn
-  Function2:
+  Merge:
     Type: AWS::Serverless::Function
     Properties:
       Description:
         Fn::Sub:
         - Stack ${AWS::StackName} Function ${ResourceName}
-        - ResourceName: Function2
-      CodeUri: Function2
+        - ResourceName: Merge
+      CodeUri: Merge
+      FunctionName: MergeData
       Handler: handler.handler
       Runtime: python3.12
       MemorySize: 3008
@@ -151,11 +153,11 @@ Resources:
             - s3:ObjectRemoved:*
       Environment:
         Variables:
-          BUCKET2_BUCKET_NAME:
-            Ref: Bucket2
-          BUCKET2_BUCKET_ARN:
+          BUCKET3_BUCKET_NAME:
+            Ref: Bucket3
+          BUCKET3_BUCKET_ARN:
             Fn::GetAtt:
-            - Bucket2
+            - Bucket3
             - Arn
       Policies:
       - Statement:
@@ -182,31 +184,33 @@ Resources:
           - s3:PutObjectRetention
           - s3:RestoreObject
           Resource:
-          - Fn::Sub: arn:${AWS::Partition}:s3:::${Bucket2}
-          - Fn::Sub: arn:${AWS::Partition}:s3:::${Bucket2}/*
+          - Fn::Sub: arn:${AWS::Partition}:s3:::${Bucket3}
+          - Fn::Sub: arn:${AWS::Partition}:s3:::${Bucket3}/*
     Metadata:
-      SamResourceId: Function2
-  Function2LogGroup:
+      SamResourceId: Merge
+  MergeLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Retain
     Properties:
       LogGroupName:
-        Fn::Sub: /aws/lambda/${Function2}
-  Bucket2:
+        Fn::Sub: /aws/lambda/${Merge}
+  Bucket3:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName:
-        Fn::Sub: ${AWS::StackName}-bucket2-${AWS::AccountId}
+      BucketName: mergeddata
       BucketEncryption:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:
             SSEAlgorithm: aws:kms
             KMSMasterKeyID: alias/aws/s3
-  Bucket2BucketPolicy:
+      PublicAccessBlockConfiguration:
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  Bucket3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket:
-        Ref: Bucket2
+        Ref: Bucket3
       PolicyDocument:
         Id: RequireEncryptionInTransit
         Version: '2012-10-17'
@@ -216,9 +220,9 @@ Resources:
           Effect: Deny
           Resource:
           - Fn::GetAtt:
-            - Bucket2
+            - Bucket3
             - Arn
-          - Fn::Sub: ${Bucket2.Arn}/*
+          - Fn::Sub: ${Bucket3.Arn}/*
           Condition:
             Bool:
               aws:SecureTransport: 'false'

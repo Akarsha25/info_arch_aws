@@ -10,13 +10,13 @@ manifest_hash = "1861be9efa0d055614dbdd09b12dd0bb"
 packagetype = "Zip"
 functions = ["Function"]
 
-[function_build_definitions.6c21afcb-03f4-4cd2-b5a5-7f1d2f5acacd]
-codeuri = "c:\\Users\\hegde\\OneDrive\\Documents\\IA\\Group-5-final\\info_arch_aws\\src\\Function2"
+[function_build_definitions.90e4a27b-2ce5-4ea4-8837-40a163888cf7]
+codeuri = "c:\\Users\\hegde\\OneDrive\\Documents\\IA\\Group-5-final\\info_arch_aws\\src\\MergeData"
 runtime = "python3.12"
 architecture = "x86_64"
 handler = "handler.handler"
-manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+manifest_hash = "89a3e57f02bc3007bdb90860212d85ee"
 packagetype = "Zip"
-functions = ["Function2"]
+functions = ["Merge"]
 
 [layer_build_definitions]

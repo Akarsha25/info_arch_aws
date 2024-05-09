@@ -17,10 +17,10 @@ def handler(event, context):
     # date_7_days_ago = current_date - datetime.timedelta(days=7)
 
     # # Format dates as stsrings
-    # date1 = current_date.strftime("%Y-%m-%d")
-    # date2 = date_7_days_ago.strftime("%Y-%m-%d")
+     date1 = current_date.strftime("%Y-%m-%d")
+     date2 = date_7_days_ago.strftime("%Y-%m-%d")
 
-    dates = [
+     #dates = [
             "2024-01-01",
             "2023-01-01",
             "2022-01-01",
@@ -29,7 +29,7 @@ def handler(event, context):
             "2019-01-01",
             "2018-01-01",
             "2017-01-01"
-    ]
+    # ]
 
 
     file_format = f"/tmp/output_api_{dates[0]}_to_{dates[-1]}.csv"
